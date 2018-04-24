@@ -1,0 +1,8 @@
+- more explicit error message when coupling is used (un?)initialised
+  [and clean up of whole alphas code?]
+
+- get intrinsic charm working with cached evolution (threshold
+  operators should become additive rather than multiplicative)
+
+- for version 2: replace evop%cross_mass_threshold with evop%apply_mass_threshold
+

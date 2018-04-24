@@ -68,7 +68,7 @@ def RHS(mu, zarray, init_fn, alpha, C):
     for i in range(len(rightIntegral)):
         if zarray[i] == 1.0:
             RHS.append(0.0)
-        else:    
+        else:
             RHS.append((alpha * C)/(mu * np.pi) * (leftIntegral[i] + 2*init_fn[i]*np.log(1-zarray[i]) + 1.5*rightIntegral[i]))
     return RHS
 
@@ -87,7 +87,7 @@ dmu = 0.5
 # z spacing
 z0 = 0.0
 zf = 1.0
-zn = 200
+zn = 100
 zarray = np.linspace(z0, zf, zn)
 
 # Get fun_array
