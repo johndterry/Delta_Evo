@@ -6,3 +6,10 @@
 - make
 - make check
 
+# Delta function evolution. To get a plot:
+- cd code/hoppet/delta_evo
+# Modify delta_tabulation.cc as desired
+- make
+- ./delta_tabulation
+- spyder ../../Python/tabulation_plot.py (then run it)
+# Currently only one dataset is stored at a time, so tabulation_plot automatically plots whatever the last result from delta_tabulation was.

@@ -74,7 +74,7 @@ def RHS(mu, zarray, init_fn, alpha, C):
 
 # QCD Parameters
 alpha = 1e-1
-C = 1.0
+C = 4.0/3.0
 
 # Delta function parameters
 a = 1e-2

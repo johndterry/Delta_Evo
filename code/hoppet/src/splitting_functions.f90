@@ -66,6 +66,8 @@ contains
     end select
 
     if (cc_piece /= cc_DELTA) res = res * x
+
+    res = zero
   end function sf_Pgg
 
   !----------------------------------------------------------------------
@@ -110,6 +112,8 @@ contains
     end select
 
     if (cc_piece /= cc_DELTA) res = res * x
+
+    res = zero  
   end function sf_Pgq
 
   !----------------------------------------------------------------------
@@ -122,7 +126,7 @@ contains
 
     select case(cc_piece)
     case(cc_REAL,cc_REALVIRT)
-       res = tr*(x**2 + (one-x)**2)
+       res =tr*(x**2 + (one-x)**2)
     end select
     select case(cc_piece)
     case(cc_VIRT,cc_REALVIRT)
@@ -132,6 +136,7 @@ contains
     end select
 
     if (cc_piece /= cc_DELTA) res = res * x
+    
   end function sf_Pqg
   
 

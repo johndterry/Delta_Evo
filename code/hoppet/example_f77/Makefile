@@ -65,3 +65,5 @@ clean:
 realclean: clean
 	rm convolution_example conveg  tabulation_example
 
+cpptest: cpptest.cpp
+	$(CXX) -o cpptest $< $(LIBS) -lm $(F90LIB4GCC)
