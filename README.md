@@ -12,5 +12,5 @@
 - make
 - ./delta_tabulation
 - spyder ../../Python/tabulation_plot.py
-- In spyder, run tabulation_plot.
-# Currently only one dataset is stored at a time, so tabulation_plot automatically plots whatever the last result from delta_tabulation was.
+- In spyder, run tabulation_plot, changing filenames to the ones data was stored in.
+# Tabulation data is stored in code/data, with filenames pdf-Q0-Q-dy.txt

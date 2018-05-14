@@ -1,8 +1,8 @@
 #! usr/bin/env python
 import matplotlib.pyplot as plt
 
-# mode = 1 if plotting hoppet default data, 2 if individual PDFs
-mode = 2
+# mode = 1 if plotting hoppet default data, 2 if individual PDFs, 2.1 if plotting u from multiple files
+mode = 2.1
 
 """ Plotting hoppet's default data """
 if (mode == 1):
@@ -14,15 +14,15 @@ if (mode == 1):
     gvals = [] # gluon
     data = [xvals, uvals, dvals, udvals, cvals, gvals]
     
-    with open("pdf.txt") as f:
+    with open("../data/pdf-10-100-0.5.txt") as f:
         lines = f.readlines()
         for line in lines:
             for vals in data:
                 vals.append(float((line[: line.find('  ')])))
                 line = line[line.find('  ') + 2: ]
     
-    plt.xlabel('x')
-    plt.ylabel('J(x)')
+    plt.set_xlabel('x', fontsize=20)
+    plt.ylabel('J(x)', fontsize=15)
     plt.xscale('log')
     plt.yscale('log')
     plt.plot(xvals, uvals, 'bo-')
@@ -49,15 +49,15 @@ if (mode == 2):
     gvals = []
     data = [xvals, tvals, tbarvals, bvals, bbarvals, cvals, cbarvals, svals, sbarvals, uvals, ubarvals, dvals, dbarvals, gvals]
     
-    with open("pdf.txt") as f:
+    with open("../data/pdf-10-100-0.5.txt") as f:
         lines = f.readlines()
         for line in lines:
             for vals in data:
                 vals.append(float((line[: line.find('  ')])))
                 line = line[line.find('  ') + 2: ]
     
-    plt.xlabel('x')
-    plt.ylabel('J(x)')
+    plt.xlabel('x', fontsize=20)
+    plt.ylabel('J(x)', fontsize=15)
     plt.xscale('log')
     plt.yscale('log')
     if (tvals != [0.0]*len(tvals)):
@@ -77,7 +77,7 @@ if (mode == 2):
     if (sbarvals != [0.0]*len(sbarvals)):
         plt.plot(xvals, sbarvals, 'mo--')
     if (uvals != [0.0]*len(uvals)):
-        plt.plot(xvals, uvals, 'co:')
+        plt.plot(xvals, uvals, 'co-')
     if (ubarvals != [0.0]*len(ubarvals)):
         plt.plot(xvals, ubarvals, 'co--')
     if (dvals != [0.0]*len(dvals)):
@@ -86,3 +86,41 @@ if (mode == 2):
         plt.plot(xvals, dbarvals, 'yo--')
     if (gvals != [0.0]*len(gvals)):
         plt.plot(xvals, gvals, 'ko--')
+        
+""" Plotting uvals from multiple files """
+if (mode == 2.1):
+    filenames = ["../data/pdf-1.41421-2-0.65.txt",
+                 "../data/pdf-1.41421-2-0.6.txt",
+                 "../data/pdf-1.41421-2-0.5.txt",
+                 "../data/pdf-1.41421-2-0.1.txt",
+                 "../data/pdf-1.41421-2-0.01.txt"]
+    labels = []
+    for filename in filenames:
+        label = "Q0 = " + filename[12 : filename.find("-",12)]
+        shortname = filename[filename.find("-",12) + 1 :]
+        label = label + ", Q = " + shortname[: shortname.find("-")]
+        shortname = shortname[shortname.find("-") + 1 :]
+        label = label + ", dy = " + shortname[: shortname.find(".t")]
+        labels.append(label)
+    
+    plt.xlabel('x', fontsize=20)
+    plt.ylabel('u(x)', fontsize=15)
+    plt.xscale('log')
+    plt.yscale('log')
+    uvals = []
+    
+    for filename in filenames:
+        uvals.append([])
+        with open(filename) as f:
+            lines = f.readlines()
+            for line in lines:
+                for i in range(9):
+                    line = line[line.find('  ') + 2: ] 
+                uvals[len(uvals)-1].append(float((line[: line.find('  ')])))
+                
+    for i in range(len(uvals)):
+        if (uvals != [0.0]*len(uvals[i])):
+            plt.plot(xvals, uvals[i], label = labels[i])
+                
+    plt.legend(loc=4, bbox_to_anchor=(1.5,0.1))
+    plt.savefig("../../paper/figures/dysmallQ.pdf", bbox_inches = "tight")
