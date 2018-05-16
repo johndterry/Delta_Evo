@@ -22,7 +22,7 @@ string to_string(double num);
 //----------------------------------------------------------------------
 int main () {
 
-  double dy    = 0.1;
+  double dy    = 0.01;
   int    nloop = 1;
 
   // initialise with NNLO, VFN
@@ -38,8 +38,8 @@ int main () {
 
   // output the results and save in pdf.txt
   double pdf[13];
-  double xvals[9]={1e-5,1e-4,1e-3,1e-2,0.1,0.3,0.5,0.7,0.9};
-  double Q = 200;
+  double xvals[13]={1e-5,1e-4,1e-3,1e-2,0.1,0.3,0.5,0.7,0.9,0.95,0.99,0.999,1};
+  double Q = 100;
  
   printf("           Evaluating PDFs at Q = %8.3f GeV\n",Q);
   ofstream outfile;
@@ -51,7 +51,7 @@ int main () {
   if (mode == 1) {
     printf("    x      u-ubar      d-dbar    2(ubr+dbr)    c+cbar       gluon\n");
   
-    for (int ix = 0; ix < 9; ix++) {
+    for (int ix = 0; ix < 13; ix++) {
       hoppetEval(xvals[ix], Q, pdf);
 
       printf("%7.1E %11.4E %11.4E %11.4E %11.4E %11.4E\n",xvals[ix],
@@ -77,7 +77,7 @@ int main () {
   // individual PDF output
   printf("    x         t        tbar          b          bbar         c         cbar          s         sbar          u        ubar          d         dbar         gluon\n");
 
-  for (int ix = 0; ix < 9; ix++) {
+  for (int ix = 0; ix < 13; ix++) {
     hoppetEval(xvals[ix], Q, pdf);
     printf("%7.1E %11.4E %11.4E %11.4E %11.4E %11.4E %11.4E %11.4E %11.4E %11.4E %11.4E %11.4E %11.4E %11.4E\n",xvals[ix],
            pdf[6+6], pdf[6-6], 
@@ -100,7 +100,7 @@ int main () {
   }
   
   outfile.close();
-}
+  }
 
 // converting doubles to strings
 string to_string(double num)
@@ -113,7 +113,9 @@ string to_string(double num)
 // delta function
 double delta(const double z, const double a)
 {
-  if ((z > 1.0 - a) and (z <= 1.0)) {
+  if ((z > 1.0) or (z < 1.0 - a)) {
+    return 0; }
+  else {
     return 2/(a*a) * (z - 1.0 + a); }
 }
 
@@ -126,7 +128,7 @@ void  heralhc_init(const double & x,
   double N_g=1.7, N_ls=0.387975;
   double N_uv=5.107200, N_dv=3.064320;
   double N_db=N_ls/2;
-  double a = 0.000001;
+  double a = 0.01;
 
   uv = N_uv * pow(x,0.8) * pow((1-x),3);
   dv = N_dv * pow(x,0.8) * pow((1-x),4);
@@ -137,7 +139,7 @@ void  heralhc_init(const double & x,
   pdf[ 0+6] = 0;  
   pdf[-3+6] = 0;
   pdf[ 3+6] = 0;
-  pdf[ 2+6] = x*delta(1-x,a);
+  pdf[ 2+6] = x*delta(x,a);
   pdf[-2+6] = 0;
   pdf[ 1+6] = 0;
   pdf[-1+6] = 0;

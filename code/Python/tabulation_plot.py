@@ -89,11 +89,11 @@ if (mode == 2):
         
 """ Plotting uvals from multiple files """
 if (mode == 2.1):
-    filenames = ["../data/pdf-1.41421-2-0.65.txt",
-                 "../data/pdf-1.41421-2-0.6.txt",
-                 "../data/pdf-1.41421-2-0.5.txt",
+    filenames = ["../data/pdf-1.41421-2-0.4.txt",
                  "../data/pdf-1.41421-2-0.1.txt",
-                 "../data/pdf-1.41421-2-0.01.txt"]
+                 "../data/pdf-1.41421-2-0.02.txt",
+                 "../data/pdf-1.41421-2-0.01.txt",
+                 "../data/pdf-1.41421-2-0.005.txt"]
     labels = []
     for filename in filenames:
         label = "Q0 = " + filename[12 : filename.find("-",12)]
@@ -105,22 +105,25 @@ if (mode == 2.1):
     
     plt.xlabel('x', fontsize=20)
     plt.ylabel('u(x)', fontsize=15)
-    plt.xscale('log')
-    plt.yscale('log')
+    #plt.xscale('log')
+    #plt.yscale('log')
+    xvals = []
     uvals = []
     
     for filename in filenames:
+        xvals.append([])
         uvals.append([])
         with open(filename) as f:
             lines = f.readlines()
             for line in lines:
+                xvals[len(uvals)-1].append(float((line[: line.find('  ')])))
                 for i in range(9):
                     line = line[line.find('  ') + 2: ] 
                 uvals[len(uvals)-1].append(float((line[: line.find('  ')])))
                 
     for i in range(len(uvals)):
-        if (uvals != [0.0]*len(uvals[i])):
-            plt.plot(xvals, uvals[i], label = labels[i])
+        if (uvals[i] != [0.0]*len(uvals[i])):
+            plt.plot(xvals[i], uvals[i], label = labels[i])
                 
-    plt.legend(loc=4, bbox_to_anchor=(1.5,0.1))
-    plt.savefig("../../paper/figures/dysmallQ.pdf", bbox_inches = "tight")
+    plt.legend(loc=4, bbox_to_anchor=(1.75,0.1))
+    plt.savefig("../../paper/figures/dy-smallQ-linear.pdf", bbox_inches = "tight")
