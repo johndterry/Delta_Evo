@@ -108,8 +108,8 @@ if (mode == 2.1):
     
     plt.xlabel('x', fontsize=20)
     plt.ylabel('u(x)', fontsize=15)
-   # plt.xscale('log')
-   # plt.yscale('log')
+    #plt.xscale('log')
+    #plt.yscale('log')
     xvals = []
     uvals = []
     

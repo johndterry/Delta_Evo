@@ -123,7 +123,7 @@ void  heralhc_init(const double & x,
   double N_g=1.7, N_ls=0.387975;
   double N_uv=5.107200, N_dv=3.064320;
   double N_db=N_ls/2;
-  double a = 0.1;
+  double a = 0.01;
 
   uv = N_uv * pow(x,0.8) * pow((1-x),3);
   dv = N_dv * pow(x,0.8) * pow((1-x),4);
