@@ -1,5 +1,6 @@
 #! usr/bin/env python
 import matplotlib.pyplot as plt
+import numpy as np
 
 # mode = 1 if plotting hoppet default data, 2 if individual PDFs, 2.1 if plotting u from multiple files
 mode = 2.1
@@ -14,7 +15,7 @@ if (mode == 1):
     gvals = [] # gluon
     data = [xvals, uvals, dvals, udvals, cvals, gvals]
     
-    with open("../data/pdf-10-100-0.5.txt") as f:
+    with open("../data/pdf-1.41421-1.41421-0.01.txt") as f:
         lines = f.readlines()
         for line in lines:
             for vals in data:
@@ -49,7 +50,7 @@ if (mode == 2):
     gvals = []
     data = [xvals, tvals, tbarvals, bvals, bbarvals, cvals, cbarvals, svals, sbarvals, uvals, ubarvals, dvals, dbarvals, gvals]
     
-    with open("../data/pdf-10-100-0.5.txt") as f:
+    with open("../data/pdf-1.41421-100-0.01.txt") as f:
         lines = f.readlines()
         for line in lines:
             for vals in data:
@@ -89,24 +90,26 @@ if (mode == 2):
         
 """ Plotting uvals from multiple files """
 if (mode == 2.1):
-    filenames = ["../data/pdf-1.41421-2-0.4.txt",
-                 "../data/pdf-1.41421-2-0.1.txt",
-                 "../data/pdf-1.41421-2-0.02.txt",
-                 "../data/pdf-1.41421-2-0.01.txt",
-                 "../data/pdf-1.41421-2-0.005.txt"]
+    filenames = ["../data/pdf-1.41421-1.41422-0.01-0.01.txt",
+                 "../data/pdf-1.41421-2-0.01-0.01.txt",
+                 "../data/pdf-1.41421-10-0.01-0.01.txt",
+                 "../data/pdf-1.41421-50-0.01-0.01.txt",
+                 "../data/pdf-1.41421-100-0.01-0.01.txt"]
     labels = []
     for filename in filenames:
         label = "Q0 = " + filename[12 : filename.find("-",12)]
         shortname = filename[filename.find("-",12) + 1 :]
         label = label + ", Q = " + shortname[: shortname.find("-")]
         shortname = shortname[shortname.find("-") + 1 :]
-        label = label + ", dy = " + shortname[: shortname.find(".t")]
+        label = label + ", dy = " + shortname[: shortname.find("-")]
+        shortname = shortname[shortname.find("-") + 1 :]
+        label = label + ", dlnlnQ = " + shortname[: shortname.find(".t")]
         labels.append(label)
     
     plt.xlabel('x', fontsize=20)
     plt.ylabel('u(x)', fontsize=15)
-    #plt.xscale('log')
-    #plt.yscale('log')
+   # plt.xscale('log')
+   # plt.yscale('log')
     xvals = []
     uvals = []
     
@@ -120,10 +123,14 @@ if (mode == 2.1):
                 for i in range(9):
                     line = line[line.find('  ') + 2: ] 
                 uvals[len(uvals)-1].append(float((line[: line.find('  ')])))
-                
-    for i in range(len(uvals)):
-        if (uvals[i] != [0.0]*len(uvals[i])):
+    
+    uvals = np.array(uvals)
+    xvals = np.array(xvals)
+    uvals = uvals/xvals    
+    
+    for i in range(np.shape(uvals)[0]):
+        if not (np.array_equal(uvals[i],np.zeros(np.shape(uvals[i])[0]))):
             plt.plot(xvals[i], uvals[i], label = labels[i])
                 
-    plt.legend(loc=4, bbox_to_anchor=(1.75,0.1))
-    plt.savefig("../../paper/figures/dy-smallQ-linear.pdf", bbox_inches = "tight")
+    plt.legend(bbox_to_anchor=(0, 1), loc=3)
+    plt.savefig("../../paper/figures/dQ-linear.pdf", bbox_inches = "tight")

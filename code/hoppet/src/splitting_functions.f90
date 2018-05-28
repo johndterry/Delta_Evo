@@ -136,7 +136,8 @@ contains
     end select
 
     if (cc_piece /= cc_DELTA) res = res * x
-    
+
+    res = zero    
   end function sf_Pqg
   
 

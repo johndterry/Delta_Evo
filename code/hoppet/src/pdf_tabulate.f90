@@ -141,7 +141,9 @@ contains
     tab%dlnlnQ = (tab%lnlnQ_max - tab%lnlnQ_min)/tab%nQ
     tab%freeze_at_Qmin = default_or_opt(.false.,freeze_at_Qmin)
     tab%lnlnQ_order = default_or_opt(def_lnlnQ_order,lnlnQ_order)
-
+    !!!print *, 'default dlnlnQ is', tab%default_dlnlnQ
+    !!!print *, 'dlnlnQ is', tab%dlnlnQ
+    !!!print *, 'nQ is', tab%nQ
     !-- by default, no extra info is given
     tab%nf_info_associated = .false.
     nullify(tab%as2pi)
@@ -156,6 +158,7 @@ contains
        tab%lnlnQ_vals(iQ) = tab%lnlnQ_min + iQ * tab%dlnlnQ
        tab%Q_vals(iQ) = invlnln(tab,tab%lnlnQ_vals(iQ))
     end do
+    !!!print *, 'Q_vals is', tab%Q_vals
     
   end subroutine pdftab_AllocTab_
 

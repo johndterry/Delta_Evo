@@ -21,30 +21,25 @@ string to_string(double num);
 
 //----------------------------------------------------------------------
 int main () {
+  
+  double ymax = 12, dy = 0.01, asQ0 = 0.35, Q0 = sqrt(2.0), Q = 100, dlnlnQ = 0.01;
+  int    nloop = 1, order = -6;
 
-  double dy    = 0.01;
-  int    nloop = 1;
 
   // initialise with NNLO, VFN
-  hoppetStart(dy, nloop);
-  // hoppetSetPoleMassVFN(1.414213563, 4.5, 175.0);
+  hoppetStartExtended(ymax, dy, Q0, Q, dlnlnQ, nloop, order, factscheme_MSbar);
   
   // evolve the initial condition
-  double asQ0 = 0.35, Q0=sqrt(2.0);
   hoppetEvolve(asQ0, Q0, nloop, 1.0, heralhc_init, Q0);
-  // alternatively preprepare an evolution and then use its cached version.
-  //hoppetPreEvolve(asQ0, Q0, nloop, 1.0, Q0);
-  //hoppetCachedEvolve(heralhc_init);
 
-  // output the results and save in pdf.txt
+  // output the results and save txt file
   double pdf[13];
   double xvals[13]={1e-5,1e-4,1e-3,1e-2,0.1,0.3,0.5,0.7,0.9,0.95,0.99,0.999,1};
-  double Q = 100;
  
   printf("           Evaluating PDFs at Q = %8.3f GeV\n",Q);
   ofstream outfile;
   string test = to_string(Q0);
-  string filename = "../../data/pdf-" + to_string(Q0) + "-" + to_string(Q) + "-" + to_string(dy) + ".txt";
+  string filename = "../../data/pdf-" + to_string(Q0) + "-" + to_string(Q) + "-" + to_string(dy) + "-" + to_string(dlnlnQ) + ".txt";
   outfile.open(filename.c_str());
 
   // default hoppet output
@@ -61,7 +56,7 @@ int main () {
 	     (pdf[6-4]+pdf[6+4]),
 	     pdf[6+0]);
 
-      outfile << xvals[ix] << "  "
+        outfile << xvals[ix] << "  "
 	      << pdf[6+2]-pdf[6-2] << "  "
 	      << pdf[6+1]-pdf[6-1] << "  "
 	      << 2*(pdf[6-1]+pdf[6-2]) << "  "
@@ -90,12 +85,12 @@ int main () {
 
     outfile << xvals[ix] << "  "
 	    << pdf[6+6] << "  " << pdf[6-6] << "  "
-	    << pdf[6+5] << "  " << pdf[6-5] << "  "
-	    << pdf[6+4] << "  " << pdf[6-4] << "  "
-	    << pdf[6+3] << "  " << pdf[6-3] << "  "
-	    << pdf[6+2] << "  " << pdf[6-2] << "  "
-	    << pdf[6+1] << "  " << pdf[6-1] << "  "
-	    << pdf[6+0] << endl;
+   	    << pdf[6+5] << "  " << pdf[6-5] << "  "
+    	    << pdf[6+4] << "  " << pdf[6-4] << "  "
+    	    << pdf[6+3] << "  " << pdf[6-3] << "  "
+    	    << pdf[6+2] << "  " << pdf[6-2] << "  "
+    	    << pdf[6+1] << "  " << pdf[6-1] << "  "
+    	    << pdf[6+0] << endl;
     
   }
   
@@ -128,7 +123,7 @@ void  heralhc_init(const double & x,
   double N_g=1.7, N_ls=0.387975;
   double N_uv=5.107200, N_dv=3.064320;
   double N_db=N_ls/2;
-  double a = 0.01;
+  double a = 0.1;
 
   uv = N_uv * pow(x,0.8) * pow((1-x),3);
   dv = N_dv * pow(x,0.8) * pow((1-x),4);
@@ -139,7 +134,7 @@ void  heralhc_init(const double & x,
   pdf[ 0+6] = 0;  
   pdf[-3+6] = 0;
   pdf[ 3+6] = 0;
-  pdf[ 2+6] = x*delta(x,a);
+  pdf[ 2+6] = delta(x,a);
   pdf[-2+6] = 0;
   pdf[ 1+6] = 0;
   pdf[-1+6] = 0;

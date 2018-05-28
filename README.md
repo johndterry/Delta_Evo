@@ -13,4 +13,4 @@
 - ./delta_tabulation
 - spyder ../../Python/tabulation_plot.py
 - In spyder, run tabulation_plot, changing filenames to the ones data was stored in.
-# Tabulation data is stored in code/data, with filenames pdf-Q0-Q-dy.txt
+# Tabulation data is stored in code/data, with filenames pdf-Q0-Q-dy-dlnlnQ.txt
