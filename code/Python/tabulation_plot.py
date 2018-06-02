@@ -1,6 +1,8 @@
 #! usr/bin/env python
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.patches import Patch
+from matplotlib.lines import Line2D
 
 # mode = 1 if plotting hoppet default data, 2 if individual PDFs, 2.1 if plotting u from multiple files
 mode = 2.1
@@ -90,26 +92,55 @@ if (mode == 2):
         
 """ Plotting uvals from multiple files """
 if (mode == 2.1):
-    filenames = ["../data/pdf-1.41421-1.41422-0.01-0.01.txt",
-                 "../data/pdf-1.41421-2-0.01-0.01.txt",
-                 "../data/pdf-1.41421-10-0.01-0.01.txt",
-                 "../data/pdf-1.41421-50-0.01-0.01.txt",
-                 "../data/pdf-1.41421-100-0.01-0.01.txt"]
+    filenames = ["../data/pdf-10-10-0.01-0.001.txt",
+                 "../data/pdf-10-10-0.01-0.01.txt",
+                 "../data/pdf-10-10-0.01-0.05.txt",
+                 "../data/pdf-10-10-0.01-0.1.txt",
+                 "../data/pdf-10-10-0.01-0.5.txt",
+                 "../data/pdf-10-40-0.01-0.001.txt",
+                 "../data/pdf-10-40-0.01-0.01.txt",
+                 "../data/pdf-10-40-0.01-0.05.txt",
+                 "../data/pdf-10-40-0.01-0.1.txt",
+                 "../data/pdf-10-40-0.01-0.5.txt",
+                 "../data/pdf-10-70-0.01-0.001.txt",
+                 "../data/pdf-10-70-0.01-0.01.txt",
+                 "../data/pdf-10-70-0.01-0.05.txt",
+                 "../data/pdf-10-70-0.01-0.1.txt",
+                 "../data/pdf-10-70-0.01-0.5.txt",
+                 "../data/pdf-10-100-0.01-0.001.txt",
+                 "../data/pdf-10-100-0.01-0.01.txt",
+                 "../data/pdf-10-100-0.01-0.05.txt",
+                 "../data/pdf-10-100-0.01-0.1.txt",
+                 "../data/pdf-10-100-0.01-0.5.txt"]
     labels = []
-    for filename in filenames:
-        label = "Q0 = " + filename[12 : filename.find("-",12)]
-        shortname = filename[filename.find("-",12) + 1 :]
-        label = label + ", Q = " + shortname[: shortname.find("-")]
-        shortname = shortname[shortname.find("-") + 1 :]
-        label = label + ", dy = " + shortname[: shortname.find("-")]
-        shortname = shortname[shortname.find("-") + 1 :]
-        label = label + ", dlnlnQ = " + shortname[: shortname.find(".t")]
-        labels.append(label)
+#    for filename in filenames:
+#        label = "Q0 = " + filename[12 : filename.find("-",12)]
+#        shortname = filename[filename.find("-",12) + 1 :]
+#        label = label + ", Q = " + shortname[: shortname.find("-")]
+#        shortname = shortname[shortname.find("-") + 1 :]
+#        label = label + ", dy = " + shortname[: shortname.find("-")]
+#        shortname = shortname[shortname.find("-") + 1 :]
+#        label = label + ", dlnlnQ = " + shortname[: shortname.find(".t")]
+#        labels.append(label)
+      
+    ## Custom version for plotting large number of datasets
+    colors = ['m:o','m:v','m:^','m:*','m--x','b:o','b:v','b:^','b:*','b--x',
+              'g:o','g:v','g:^','g:*','g--x','r:o','r:v','r:^','r:*','r--x']
+    legendElements = [Line2D([0],[0], color='k', linestyle=':', marker='o', label='dlnlnQ = 0.001'),
+                      Line2D([0],[0], color='k', linestyle=':', marker='v', label='dlnlnQ = 0.01'),
+                      Line2D([0],[0], color='k', linestyle=':', marker='^', label='dlnlnQ = 0.05'),
+                      Line2D([0],[0], color='k', linestyle=':', marker='*', label='dlnlnQ = 0.1'),
+                      Line2D([0],[0], color='k', linestyle='--', marker='x', label='dlnlnQ = 0.5'),
+                      Patch(facecolor='m', label='Q = 10+1e-8'),
+                      Patch(facecolor='b', label='Q = 40'),
+                      Patch(facecolor='g', label='Q = 70'),
+                      Patch(facecolor='r', label='Q = 100')]  
+    ##   
     
     plt.xlabel('x', fontsize=20)
     plt.ylabel('u(x)', fontsize=15)
-    #plt.xscale('log')
-    #plt.yscale('log')
+    plt.xscale('log')
+    plt.yscale('log')
     xvals = []
     uvals = []
     
@@ -126,11 +157,18 @@ if (mode == 2.1):
     
     uvals = np.array(uvals)
     xvals = np.array(xvals)
-    uvals = uvals/xvals    
+    uvals = uvals/xvals   
     
+#    for i in range(np.shape(uvals)[0]):
+#        if not (np.array_equal(uvals[i],np.zeros(np.shape(uvals[i])[0]))):
+#            plt.plot(xvals[i], uvals[i], label = labels[i])
+    
+    ## Custom version for plotting large number of datasets
     for i in range(np.shape(uvals)[0]):
         if not (np.array_equal(uvals[i],np.zeros(np.shape(uvals[i])[0]))):
-            plt.plot(xvals[i], uvals[i], label = labels[i])
+            plt.plot(xvals[i], uvals[i], colors[i])
+    plt.legend(handles=legendElements, bbox_to_anchor=(0, 1), ncol=2, loc=3)
+    ##
                 
-    plt.legend(bbox_to_anchor=(0, 1), loc=3)
-    plt.savefig("../../paper/figures/dQ-linear.pdf", bbox_inches = "tight")
+    #plt.legend(bbox_to_anchor=(0, 1), loc=3)
+    plt.savefig("../../paper/figures/dlnlnQ-fourQs.pdf", bbox_inches = "tight")
