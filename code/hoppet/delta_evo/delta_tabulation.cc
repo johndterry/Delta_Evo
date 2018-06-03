@@ -22,7 +22,7 @@ string to_string(double num);
 //----------------------------------------------------------------------
 int main () {
   
-  double ymax = 12, dy = 0.01, asQ0 = 0.35, Q0 = 10, Q = 70, dlnlnQ = 0.5;
+  double ymax = 12, dy = 0.01, asQ0 = 0.35, Q0 = 10, Q = 1000, dlnlnQ = 0.01;
   int    nloop = 1, order = -6;
 
 
