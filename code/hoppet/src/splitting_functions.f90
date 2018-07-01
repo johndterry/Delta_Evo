@@ -66,8 +66,6 @@ contains
     end select
 
     if (cc_piece /= cc_DELTA) res = res * x
-
-    res = zero
   end function sf_Pgg
 
   !----------------------------------------------------------------------
@@ -93,7 +91,7 @@ contains
   end function sf_Pqq
 
   !----------------------------------------------------------------------
-  function sf_Pgq(y) result(res)
+  function sf_Pqg(y) result(res)
     real(dp), intent(in) :: y
     real(dp)             :: res
     real(dp)             :: x
@@ -112,12 +110,10 @@ contains
     end select
 
     if (cc_piece /= cc_DELTA) res = res * x
-
-    res = zero  
-  end function sf_Pgq
+  end function sf_Pqg
 
   !----------------------------------------------------------------------
-  function sf_Pqg(y) result(res)
+  function sf_Pgq(y) result(res)
     real(dp), intent(in) :: y
     real(dp)             :: res
     real(dp)             :: x
@@ -136,9 +132,7 @@ contains
     end select
 
     if (cc_piece /= cc_DELTA) res = res * x
-
-    res = zero    
-  end function sf_Pqg
+  end function sf_Pgq
   
 
 

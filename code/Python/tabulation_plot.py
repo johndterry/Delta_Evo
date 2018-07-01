@@ -5,7 +5,7 @@ from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
 
 # mode = 1 if plotting hoppet default data, 2 if individual PDFs, 2.1 if plotting u from multiple files
-mode = 2.1
+mode = 2
 
 """ Plotting hoppet's default data """
 if (mode == 1):
@@ -51,8 +51,12 @@ if (mode == 2):
     dbarvals = []
     gvals = []
     data = [xvals, tvals, tbarvals, bvals, bbarvals, cvals, cbarvals, svals, sbarvals, uvals, ubarvals, dvals, dbarvals, gvals]
+    for vals in data:
+        vals = np.array(vals)
+        if (vals != xvals):
+            vals = vals/xvals
     
-    with open("../data/pdf-1.41421-100-0.01.txt") as f:
+    with open("../data/u-10-1000-0.01-0.01.txt") as f:
         lines = f.readlines()
         for line in lines:
             for vals in data:
@@ -60,52 +64,52 @@ if (mode == 2):
                 line = line[line.find('  ') + 2: ]
     
     plt.xlabel('x', fontsize=20)
-    plt.ylabel('J(x)', fontsize=15)
+    plt.ylabel('D(x)', fontsize=15)
     plt.xscale('log')
     plt.yscale('log')
+    plt.title('Evolution from $Q_0 = 10$ to $Q = 1000$',fontsize=15)
+    
     if (tvals != [0.0]*len(tvals)):
-        plt.plot(xvals, tvals, 'bo:')
+        plt.plot(xvals, tvals, 'bo:', label = "$t$")
     if (tbarvals != [0.0]*len(tbarvals)):
-        plt.plot(xvals, tbarvals, 'bo--')
+        plt.plot(xvals, tbarvals, 'b^--', label = "$\\bar{t}$")
     if (bvals != [0.0]*len(bvals)):
-        plt.plot(xvals, bvals, 'ro:')
+        plt.plot(xvals, bvals, 'ro:', label = "$b$")
     if (bbarvals != [0.0]*len(bbarvals)):
-        plt.plot(xvals, bbarvals, 'ro--')
+        plt.plot(xvals, bbarvals, 'r^--', label = "$\\bar{b}$")
     if (cvals != [0.0]*len(cvals)):
-        plt.plot(xvals, cvals, 'go:')
+        plt.plot(xvals, cvals, 'go:', label = "$c$")
     if (cbarvals != [0.0]*len(cbarvals)):
-        plt.plot(xvals, cbarvals, 'go--')
+        plt.plot(xvals, cbarvals, 'g^--', label = "$\\bar{c}$")
     if (svals != [0.0]*len(svals)):
-        plt.plot(xvals, svals, 'mo:')
+        plt.plot(xvals, svals, 'mo:', label = "$s$")
     if (sbarvals != [0.0]*len(sbarvals)):
-        plt.plot(xvals, sbarvals, 'mo--')
+        plt.plot(xvals, sbarvals, 'm^--', label = "$\\bar{s}$")
     if (uvals != [0.0]*len(uvals)):
-        plt.plot(xvals, uvals, 'co-')
+        plt.plot(xvals, uvals, 'co-', label = "$u$")
     if (ubarvals != [0.0]*len(ubarvals)):
-        plt.plot(xvals, ubarvals, 'co--')
+        plt.plot(xvals, ubarvals, 'c^--', label = "$\\bar{u}$")
     if (dvals != [0.0]*len(dvals)):
-        plt.plot(xvals, dvals, 'yo:')
+        plt.plot(xvals, dvals, 'yo:', label = "$d$")
     if (dbarvals != [0.0]*len(dbarvals)):
-        plt.plot(xvals, dbarvals, 'yo--')
+        plt.plot(xvals, dbarvals, 'y^--', label = "$\\bar{d}$")
     if (gvals != [0.0]*len(gvals)):
-        plt.plot(xvals, gvals, 'ko--')
+        plt.plot(xvals, gvals, 'ko--', label = "$g$")
+        
+    plt.legend(bbox_to_anchor=(1,0), loc=3)
         
 """ Plotting uvals from multiple files """
 if (mode == 2.1):
-    filenames = ["../data/pdf-10-10-0.01-0.01.txt",
-                 "../data/pdf-10-10.0001-0.01-0.01.txt",
-                 "../data/pdf-10-10.1-0.01-0.01.txt",
-                 "../data/pdf-10-40-0.01-0.01.txt",
-                 "../data/pdf-10-100-0.01-0.01.txt"]
+    filenames = ["../data/pdf-10-1000-0.01-0.01.txt"]
     labels = []
     for filename in filenames:
-        #label = "Q0 = " + filename[12 : filename.find("-",12)]
-        #shortname = filename[filename.find("-",12) + 1 :]
-        #label = label + ", Q = " + shortname[: shortname.find("-")]
-        #shortname = shortname[shortname.find("-") + 1 :]
-        #label = label + ", dy = " + shortname[: shortname.find("-")]
-        #shortname = shortname[shortname.find("-") + 1 :]
-        #label = label + ", dlnlnQ = " + shortname[: shortname.find(".t")]
+#        label = "Q0 = " + filename[12 : filename.find("-",12)]
+#        shortname = filename[filename.find("-",12) + 1 :]
+#        label = label + ", Q = " + shortname[: shortname.find("-")]
+#        shortname = shortname[shortname.find("-") + 1 :]
+#        label = label + ", dy = " + shortname[: shortname.find("-")]
+#        shortname = shortname[shortname.find("-") + 1 :]
+#        label = label + ", dlnlnQ = " + shortname[: shortname.find(".t")]
         shortname = filename[filename.find("-",12) + 1 :]
         if (shortname[: shortname.find("-")] == "10"):
             labels.append("Q = 10+1e-8")
@@ -130,7 +134,7 @@ if (mode == 2.1):
     plt.ylabel('u(x)', fontsize=15)
     plt.xscale('log')
     plt.yscale('log')
-    plt.title('Evolution from $Q_0 = 10$',fontsize=15)
+#    plt.title('Evolution from $Q_0 = 10$',fontsize=15)
     xvals = []
     uvals = []
     
@@ -161,4 +165,4 @@ if (mode == 2.1):
 #    plt.legend(handles=legendElements, bbox_to_anchor=(0, 1), ncol=2, loc=3)
 #    ##
     
-    plt.savefig("../../paper/figures/dQ-fiveQs.pdf", bbox_inches = "tight")
+plt.savefig("../../paper/figures/1000GeV.pdf", bbox_inches = "tight")
