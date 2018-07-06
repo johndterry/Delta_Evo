@@ -56,7 +56,8 @@ if (mode == 2):
         if (vals != xvals):
             vals = vals/xvals
     
-    with open("../data/u-10-1000-0.01-0.01.txt") as f:
+    plotfile = "../../paper/figures/down-10GeV.pdf"
+    with open("../data/d-10-10-0.01-0.01.txt") as f:
         lines = f.readlines()
         for line in lines:
             for vals in data:
@@ -64,10 +65,10 @@ if (mode == 2):
                 line = line[line.find('  ') + 2: ]
     
     plt.xlabel('x', fontsize=20)
-    plt.ylabel('D(x)', fontsize=15)
+    plt.ylabel('J(x)', fontsize=15)
     plt.xscale('log')
     plt.yscale('log')
-    plt.title('Evolution from $Q_0 = 10$ to $Q = 1000$',fontsize=15)
+    plt.title('Evolution of down from $Q_0 = 10$ to $Q = 10+1e-8$',fontsize=14)
     
     if (tvals != [0.0]*len(tvals)):
         plt.plot(xvals, tvals, 'bo:', label = "$t$")
@@ -90,7 +91,7 @@ if (mode == 2):
     if (ubarvals != [0.0]*len(ubarvals)):
         plt.plot(xvals, ubarvals, 'c^--', label = "$\\bar{u}$")
     if (dvals != [0.0]*len(dvals)):
-        plt.plot(xvals, dvals, 'yo:', label = "$d$")
+        plt.plot(xvals, dvals, 'yo-', label = "$d$")
     if (dbarvals != [0.0]*len(dbarvals)):
         plt.plot(xvals, dbarvals, 'y^--', label = "$\\bar{d}$")
     if (gvals != [0.0]*len(gvals)):
@@ -164,5 +165,5 @@ if (mode == 2.1):
 #            plt.plot(xvals[i], uvals[i], colors[i])
 #    plt.legend(handles=legendElements, bbox_to_anchor=(0, 1), ncol=2, loc=3)
 #    ##
-    
-plt.savefig("../../paper/figures/1000GeV.pdf", bbox_inches = "tight")
+
+plt.savefig(plotfile, bbox_inches = "tight")

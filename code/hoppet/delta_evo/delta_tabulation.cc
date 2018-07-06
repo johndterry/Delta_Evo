@@ -22,7 +22,7 @@ string to_string(double num);
 //----------------------------------------------------------------------
 int main () {
   
-  double ymax = 12, dy = 0.01, asQ0 = 0.35, Q0 = 10, Q = 1000, dlnlnQ = 0.01;
+  double ymax = 12, dy = 0.01, asQ0 = 0.35, Q0 = 10, Q = 10+1e-8, dlnlnQ = 0.01;
   int    nloop = 1, order = -6; 
 
 
@@ -39,7 +39,7 @@ int main () {
   printf("           Evaluating PDFs at Q = %8.3f GeV\n",Q);
   ofstream outfile;
   string test = to_string(Q0);
-  string filename = "../../data/bbar-" + to_string(Q0) + "-" + to_string(Q) + "-" + to_string(dy) + "-" + to_string(dlnlnQ) + ".txt";
+  string filename = "../../data/d-" + to_string(Q0) + "-" + to_string(Q) + "-" + to_string(dy) + "-" + to_string(dlnlnQ) + ".txt";
   outfile.open(filename.c_str());
 
   // default hoppet output
@@ -136,13 +136,13 @@ void  heralhc_init(const double & x,
   pdf[ 3+6] = 0;
   pdf[ 2+6] = 0;
   pdf[-2+6] = 0;
-  pdf[ 1+6] = 0;
+  pdf[ 1+6] = x*delta(x,a);
   pdf[-1+6] = 0;
 
   pdf[ 4+6] = 0;
   pdf[ 5+6] = 0;
   pdf[ 6+6] = 0;
   pdf[-4+6] = 0;
-  pdf[-5+6] = x*delta(x,a);
+  pdf[-5+6] = 0;
   pdf[-6+6] = 0;
 }
