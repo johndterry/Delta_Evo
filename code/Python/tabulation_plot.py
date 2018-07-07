@@ -56,19 +56,19 @@ if (mode == 2):
         if (vals != xvals):
             vals = vals/xvals
     
-    plotfile = "../../paper/figures/down-10GeV.pdf"
-    with open("../data/d-10-10-0.01-0.01.txt") as f:
+    plotfile = "../../paper/figures/10GeV.pdf"
+    with open("../data/all-10-10-0.01-0.01.txt") as f:
         lines = f.readlines()
         for line in lines:
             for vals in data:
                 vals.append(float((line[: line.find('  ')])))
                 line = line[line.find('  ') + 2: ]
     
-    plt.xlabel('x', fontsize=20)
-    plt.ylabel('J(x)', fontsize=15)
+    plt.xlabel('', fontsize=20)
+    plt.ylabel('J(z)', fontsize=15)
     plt.xscale('log')
     plt.yscale('log')
-    plt.title('Evolution of down from $Q_0 = 10$ to $Q = 10+1e-8$',fontsize=14)
+    plt.title('Evolution from $Q_0 = 10$ to $Q = 10+1e-8$ GeV',fontsize=14)
     
     if (tvals != [0.0]*len(tvals)):
         plt.plot(xvals, tvals, 'bo:', label = "$t$")
