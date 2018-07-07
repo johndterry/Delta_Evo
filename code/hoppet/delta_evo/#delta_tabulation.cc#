@@ -13,7 +13,7 @@ using namespace std;
 // set to 1 if using hoppet default, 2 to see all individual PDFs
 int mode = 2;
 
-double ymax = 12, dy = 0.01, asQ0 = 0.35, Q0 = 249, Q = 250, dlnlnQ = 0.01;
+double ymax = 12, dy = 0.01, asQ0 = 0.35, Q0 = 10, Q = 250, dlnlnQ = 0.01;
 int    nloop = 1, order = -6;
 
 // constants given default values that hoppet uses

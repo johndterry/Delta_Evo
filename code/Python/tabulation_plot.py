@@ -71,7 +71,7 @@ if (mode == 2):
     plt.title('Evolution from $Q_0 = 10$ to $Q = 250$ GeV',fontsize=14)
     
     if (tvals != [0.0]*len(tvals)):
-        plt.plot(xvals, tvals, 'bo:', label = "$t$")
+        plt.plot(xvals, tvals, 'bo-', label = "$t$")
     if (tbarvals != [0.0]*len(tbarvals)):
         plt.plot(xvals, tbarvals, 'b^--', label = "$\\bar{t}$")
     if (bvals != [0.0]*len(bvals)):
