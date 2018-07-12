@@ -10,7 +10,10 @@ import pylab as py
 
 # Delta function using heaviside theta
 def delta(z, a):
-    return np.heaviside(z+a-1.0, 1.0)*np.heaviside(1.0-z, 1.0)*2/(a*a) * (z - 1.0 + a)
+    if (z > 1.0) or (z < 1.0 - a):
+        return 0
+    else:
+        return 2/(a*a) * (z - 1.0 + a)
 
 # Get initial value using quad (quad has great accuracy but will not be usable later)
 def initial(zarray, mu0, a, alpha, C):
@@ -117,7 +120,7 @@ ax.set_ylabel(r'J(\mu = 100, z)', fontsize=15)
 
 py.tight_layout()
 cwd = os.getcwd()
-py.savefig(cwd+'/../paper/figures/Jmu1.pdf')
+#py.savefig(cwd+'/../paper/figures/Jmu1.pdf')
 py.show()
 
 # Plot for given z in zarray
