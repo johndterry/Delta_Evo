@@ -257,7 +257,7 @@ contains
     logical, save :: first_call = .true.
     character(len=80) :: string1, string2
     integer, save     :: warn_dy = 4
-
+    
     if (first_call) then
        first_call = .false.
        call HoppetWelcomeMessage
@@ -406,7 +406,7 @@ contains
     do i = 2, grid%nsub+1
        grid%subiy(i) = grid%subiy(i-1) + subgd(i-1)%ny + 1
     end do
-    
+  
   end subroutine conv_InitGridDef_multi
   
 
@@ -688,7 +688,7 @@ contains
           gq(iy) = func(iy*grid%dy, axtra)
        end do
     end if
-    
+ 
   end subroutine conv_InitGridQuant_func_a
 
 
@@ -753,6 +753,7 @@ contains
           gq(iy,:) = func(iy*grid%dy, n)
        end do
     end if
+    
   end subroutine conv_InitGridQuant_func2d
 
   !----------------------------------------------------------------------
@@ -787,6 +788,7 @@ contains
           gq(iy,:) = func(iy*grid%dy, axtra, n)
        end do
     end if
+    
   end subroutine conv_InitGridQuant_func2d_a
 
   !----------------------------------------------------------------------
@@ -822,6 +824,7 @@ contains
           gq(iy,:) = func(iy*grid%dy, axtra, ixtra, n)
        end do
     end if
+   
   end subroutine conv_InitGridQuant_func2d_ai
 
 
@@ -842,7 +845,7 @@ contains
     !-----------------------------------------
     integer  :: iy, isub, ny
     real(dp) :: f(size(gq,dim=2))
-
+   
     ny = assert_eq(grid%ny,ubound(gq,dim=1),"conv_InitGridQuant_func")
     if (grid%nsub /= 0) then
        do isub = 1, grid%nsub
@@ -851,10 +854,11 @@ contains
        end do
     else
        do iy = 0, ny
-          call LHAsub(exp(-iy*grid%dy), Q, f)
-          gq(iy,:) = f
+             call LHAsub(exp(-iy*grid%dy), Q, f)
+             gq(iy,:) = f
        end do
     end if
+ 
   end subroutine InitGridQuantLHAPDF
 
   !----------------------------------------------------------------------
@@ -883,6 +887,7 @@ contains
           call sub(iy*grid%dy, gq(iy,:))
        end do
     end if
+   
   end subroutine conv_InitGridQuantSub_2d
 
   recursive subroutine conv_InitGridQuantSub_2d_a(grid, gq, sub, axtra)
@@ -910,6 +915,7 @@ contains
           call sub(iy*grid%dy, axtra, gq(iy,:))
        end do
     end if
+   
   end subroutine conv_InitGridQuantSub_2d_a
 
   recursive subroutine conv_InitGridQuantSub_2d_ai(grid, gq, sub, axtra, ixtra)
@@ -939,6 +945,7 @@ contains
           call sub(iy*grid%dy, axtra, ixtra, gq(iy,:))
        end do
     end if
+    
   end subroutine conv_InitGridQuantSub_2d_ai
 
 
@@ -1185,6 +1192,7 @@ contains
        iylo = min(max(floor(y / grid%dy)-(npnt-1)/2,0),ny-npnt+1)
        call uniform_interpolation_weights(y/grid%dy-iylo, wgts)
     end if
+
   end subroutine WgtGridQuant
   
 

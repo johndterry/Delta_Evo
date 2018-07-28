@@ -110,6 +110,7 @@ contains
     end select
 
     if (cc_piece /= cc_DELTA) res = res * x
+    
   end function sf_Pqg
 
   !----------------------------------------------------------------------
@@ -132,6 +133,7 @@ contains
     end select
 
     if (cc_piece /= cc_DELTA) res = res * x
+   
   end function sf_Pgq
   
 

@@ -152,11 +152,11 @@ subroutine hoppetStartExtended(ymax,dy,Qmin,Qmax,dlnlnQ,nloop,order,factscheme)
   ! accuracy is slightly reduced)
   !order = -5 
   ! Now create a nested grid
-  call InitGridDef(gdarray(4),dy/27.0_dp,0.2_dp, order=order)
-  call InitGridDef(gdarray(3),dy/9.0_dp,0.5_dp, order=order)
-  call InitGridDef(gdarray(2),dy/3.0_dp,2.0_dp, order=order)
-  call InitGridDef(gdarray(1),dy,       ymax  ,order=order)
-  call InitGridDef(grid,gdarray(1:4),locked=.true.)
+  call InitGridDef(gdarray(2),dy/27.0_dp, 5.0_dp, order=order)
+  call InitGridDef(gdarray(1),dy,ymax, order=order)
+!!!  call InitGridDef(gdarray(2),dy/27.0_dp,2.0_dp, order=order)
+!!!  call InitGridDef(gdarray(1),dy/27.0_dp,       ymax  ,order=order)
+  call InitGridDef(grid,gdarray(1:2),locked=.true.)
 
   ! Fill the array that will be used for table index lookup (e.g. 21 is PNLO*PLO).
   ! For now do it by hand; one day we might automate this;
